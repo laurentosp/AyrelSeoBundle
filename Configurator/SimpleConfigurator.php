@@ -2,8 +2,8 @@
 
 namespace Ayrel\SeoBundle\Configurator;
 
+use Ayrel\SeoBundle\Reader\AbstractReader;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Yaml\Yaml;
 
 class SimpleConfigurator
 {
@@ -15,7 +15,7 @@ class SimpleConfigurator
         $this->request = $requestStack->getCurrentRequest();
     }
 
-    public function addReader($reader)
+    public function addReader(AbstractReader $reader)
     {
         if ($this->request) {
             $reader->setRequest($this->request);

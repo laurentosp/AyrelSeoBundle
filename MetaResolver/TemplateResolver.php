@@ -3,7 +3,6 @@
 namespace Ayrel\SeoBundle\MetaResolver;
 
 use Ayrel\SeoBundle\Configurator\SimpleConfigurator;
-use Symfony\Bridge\Twig\TwigEngine;
 
 /**
  *
@@ -21,7 +20,7 @@ class TemplateResolver
     */
     public function getTemplating()
     {
-        if ($this->templating==null) {
+        if ($this->templating===null) {
             throw new \Exception('templating is not set');
         }
 
@@ -62,7 +61,7 @@ class TemplateResolver
 
         foreach ($this->getConfig() as $key => $val) {
             $key = str_replace("_", ":", $key);
-            $meta['meta'][$key] = $this->resolveTemplate($key, $val);
+            $meta['meta'][$key] = $this->resolveTemplate($val);
         }
 
         if ($meta['meta']['title']) {
@@ -73,7 +72,7 @@ class TemplateResolver
         return $meta;
     }
 
-    public function resolveTemplate($meta, $template)
+    public function resolveTemplate($template)
     {
         $tmp = $this->getTemplating()->createTemplate($template);
         return strip_tags($tmp->render($this->getContext()));

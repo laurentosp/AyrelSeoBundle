@@ -14,7 +14,7 @@ abstract class AbstractReader
     */
     public function getRequest()
     {
-        if ($this->request==null) {
+        if ($this->request===null) {
             throw new \Exception('request is not set');
         }
 

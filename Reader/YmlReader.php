@@ -2,7 +2,6 @@
 
 namespace Ayrel\SeoBundle\Reader;
 
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Yaml\Yaml;
 
 class YmlReader extends AbstractReader

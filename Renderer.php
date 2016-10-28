@@ -2,9 +2,7 @@
 
 namespace Ayrel\SeoBundle;
 
-use Ayrel\SeoBundle\Configurator\SimpleConfigurator;
 use Ayrel\SeoBundle\MetaResolver\TemplateResolver;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  *
@@ -22,7 +20,7 @@ class Renderer
         $this->tplResolver = $tplResolver;
         $this->tplResolver->setTemplating($twig);
         
-        if ($tpl == null) {
+        if ($tpl===null) {
             $tpl = self::TPL;
         }
 
@@ -33,7 +31,7 @@ class Renderer
     {
         return $this->twig->render(
             $this->tpl,
-            $metadata = $this->getMetaData()
+            $this->getMetaData()
         );
     }
 
