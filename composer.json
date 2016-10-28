@@ -1,0 +1,26 @@
+{
+    "name": "ayrel/seo-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony SEO bundle : create title and meta html tag with the request attributes",
+    "keywords": ["Seo", "title", "description", "open-graph", "twitter-card"],
+    "homepage": "https://github.com/laurentosp/AyrelSeoBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Laurent Rossillol",
+            "email": "laurent@operamusica.com"
+        },
+        {
+            "name": "Olivier Dupont",
+            "email": "olivier@operamusica.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Ayrel\\SeoBundle\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    }
+}

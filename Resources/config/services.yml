@@ -1,0 +1,31 @@
+services:
+  ayrel_seo.renderer:
+      class: Ayrel\SeoBundle\Renderer
+      arguments:
+        - "@twig"
+        - "@ayrel_seo.template_resolver"
+      public: false
+  ayrel_seo.template_resolver:
+      class: Ayrel\SeoBundle\MetaResolver\TemplateResolver
+      arguments:
+        - "@ayrel_seo.configurator"
+        - "@twig"
+      public: false
+  ayrel_seo.yml_reader:
+      class: Ayrel\SeoBundle\Reader\YmlReader
+      arguments:
+        - "@request_stack"
+        - "%kernel.root_dir%/config/seo.yml"
+      public: false
+  ayrel_seo.configurator:
+      class: Ayrel\SeoBundle\Configurator\SimpleConfigurator
+      public: false
+      calls:
+            - [addReader, ['@ayrel_seo.yml_reader']]
+  ayrel_seo.twig_extension:
+        class: Ayrel\SeoBundle\Twig\SeoExtension
+        arguments:
+          - "@ayrel_seo.renderer"
+        public: false
+        tags:
+            - { name: twig.extension }
