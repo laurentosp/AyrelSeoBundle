@@ -14,7 +14,7 @@ class YmlReader extends AbstractReader
 
     public function getYaml()
     {
-        if (is_file($this->path)) {
+        if (!is_file($this->path)) {
             return null;
         }
 
@@ -34,7 +34,7 @@ class YmlReader extends AbstractReader
 
     public function isAvailable()
     {
-        if ($this->getYaml()) {
+        if (!$this->getYaml()) {
             return false;
         }
 

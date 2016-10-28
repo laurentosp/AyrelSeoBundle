@@ -10,12 +10,9 @@ use Symfony\Bridge\Twig\TwigEngine;
  */
 class TemplateResolver
 {
-    protected $config;
-    protected $context;
-
-    public function __construct(SimpleConfigurator $config)
+    public function __construct(SimpleConfigurator $configurator)
     {
-        $this->config = $config;
+        $this->configurator = $configurator;
     }
 
     /**
@@ -47,7 +44,7 @@ class TemplateResolver
     */
     public function getConfig()
     {
-        return $this->config->getConfig();
+        return $this->configurator->getConfig();
     }
 
     /**
@@ -56,7 +53,7 @@ class TemplateResolver
     */
     public function getContext()
     {
-        return $this->config->getContext();
+        return $this->configurator->getContext();
     }
 
     public function getMetaData()
