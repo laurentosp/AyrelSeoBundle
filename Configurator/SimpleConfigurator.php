@@ -17,7 +17,9 @@ class SimpleConfigurator
 
     public function addReader($reader)
     {
-        $reader->setRequest($this->request);
+        if ($this->request) {
+            $reader->setRequest($this->request);
+        }
         $this->readers[] = $reader;
     }
 
