@@ -2,23 +2,41 @@
 
 namespace Ayrel\SeoBundle\Reader;
 
-use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractReader
 {
     protected $request;
 
-    public function __construct(RequestStack $requestStack)
+    /**
+    * Get request
+    * @return Request
+    */
+    public function getRequest()
     {
-        $this->request = $requestStack->getCurrentRequest();
+        if ($this->request==null) {
+            throw new \Exception('request is not set');
+        }
+
+        return $this->request;
+    }
+    
+    /**
+    * Set request
+    * @return $this
+    */
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
+        return $this;
     }
 
     public function getContext()
     {
-        $this->request->attributes->set('var', "ma variable");
-        $this->request->attributes->set('desc', "ma desc...");
+        $this->getRequest()->attributes->set('var', "ma variable");
+        $this->getRequest()->attributes->set('desc', "ma desc...");
 
-        return $this->request->attributes->all();
+        return $this->getRequest()->attributes->all();
     }
 
     abstract public function getConfig();

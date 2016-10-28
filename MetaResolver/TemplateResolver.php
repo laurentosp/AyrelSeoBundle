@@ -13,10 +13,32 @@ class TemplateResolver
     protected $config;
     protected $context;
 
-    public function __construct(SimpleConfigurator $config, \Twig_Environment $templating)
+    public function __construct(SimpleConfigurator $config)
+    {
+        $this->config = $config;
+    }
+
+    /**
+    * Get templating
+    * @return \Twig_Environment $templating
+    */
+    public function getTemplating()
+    {
+        if ($this->templating==null) {
+            throw new \Exception('templating is not set');
+        }
+
+        return $this->templating;
+    }
+    
+    /**
+    * Set templating
+    * @return $this
+    */
+    public function setTemplating(\Twig_Environment $templating)
     {
         $this->templating = $templating;
-        $this->config = $config;
+        return $this;
     }
 
     /**
@@ -56,7 +78,7 @@ class TemplateResolver
 
     public function resolveTemplate($meta, $template)
     {
-        $tmp = $this->templating->createTemplate($template);
+        $tmp = $this->getTemplating()->createTemplate($template);
         return strip_tags($tmp->render($this->getContext()));
     }
 }

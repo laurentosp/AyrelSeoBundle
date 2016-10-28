@@ -7,9 +7,8 @@ use Symfony\Component\Yaml\Yaml;
 
 class YmlReader extends AbstractReader
 {
-    public function __construct(RequestStack $requestStack, $path)
+    public function __construct($path)
     {
-        parent::__construct($requestStack);
         $this->yaml = Yaml::parse(file_get_contents($path));
     }
 
@@ -26,6 +25,10 @@ class YmlReader extends AbstractReader
 
     public function isAvailable()
     {
+        if (!$this->yaml) {
+            return false;
+        }
+
         return isset($this->yaml[$this->getRoute()]);
     }
 

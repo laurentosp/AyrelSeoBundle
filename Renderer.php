@@ -20,6 +20,7 @@ class Renderer
     ) {
         $this->twig = $twig;
         $this->tplResolver = $tplResolver;
+        $this->tplResolver->setTemplating($twig);
         
         if ($tpl == null) {
             $tpl = self::TPL;

@@ -23,6 +23,9 @@ class SeoExtension extends \Twig_Extension
 
     public function seo()
     {
-        return $this->renderer->render();
+        try {
+            return $this->renderer->render();
+        } catch (\Exception $e) {
+        }
     }
 }

@@ -1,31 +1,35 @@
 services:
   ayrel_seo.renderer:
-      class: Ayrel\SeoBundle\Renderer
-      arguments:
-        - "@twig"
-        - "@ayrel_seo.template_resolver"
-      public: false
+    class: Ayrel\SeoBundle\Renderer
+    arguments:
+      - "@twig"
+      - "@ayrel_seo.template_resolver"
+    public: false
   ayrel_seo.template_resolver:
-      class: Ayrel\SeoBundle\MetaResolver\TemplateResolver
-      arguments:
-        - "@ayrel_seo.configurator"
-        - "@twig"
-      public: false
+    class: Ayrel\SeoBundle\MetaResolver\TemplateResolver
+    arguments:
+      - "@ayrel_seo.configurator"
+    public: false
   ayrel_seo.yml_reader:
-      class: Ayrel\SeoBundle\Reader\YmlReader
-      arguments:
-        - "@request_stack"
-        - "%kernel.root_dir%/config/seo.yml"
-      public: false
+    class: Ayrel\SeoBundle\Reader\YmlReader
+    arguments:
+      - "%kernel.root_dir%/config/seo.yml"
+    public: false
+  ayrel_seo.annotation_reader:
+    class: Ayrel\SeoBundle\Reader\AnnotationReader
+    public: false
   ayrel_seo.configurator:
-      class: Ayrel\SeoBundle\Configurator\SimpleConfigurator
-      public: false
-      calls:
-            - [addReader, ['@ayrel_seo.yml_reader']]
+    class: Ayrel\SeoBundle\Configurator\SimpleConfigurator
+    arguments:
+      - "@request_stack"
+    public: false
+    calls:
+          - [addReader, ['@ayrel_seo.yml_reader']]
+          - [addReader, ['@ayrel_seo.annotation_reader']]
   ayrel_seo.twig_extension:
-        class: Ayrel\SeoBundle\Twig\SeoExtension
-        arguments:
-          - "@ayrel_seo.renderer"
-        public: false
-        tags:
-            - { name: twig.extension }
+    class: Ayrel\SeoBundle\Twig\SeoExtension
+    arguments:
+      - "@ayrel_seo.renderer"
+    public: false
+    tags:
+        - { name: twig.extension }
