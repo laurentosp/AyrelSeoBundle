@@ -4,6 +4,8 @@ With this bundle you can configure html meta tag and title tag in a config file 
 
 You can write meta tags with Twig patterns. The available variables are those in the Request attributes.
 
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/00b944d1-d197-42ae-8319-27bccebe6006/big.png)](https://insight.sensiolabs.com/projects/00b944d1-d197-42ae-8319-27bccebe6006)
+
 ## Install
 
 this bundle is not STABLE, it's not publish on packagist...
