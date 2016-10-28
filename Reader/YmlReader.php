@@ -9,7 +9,16 @@ class YmlReader extends AbstractReader
 {
     public function __construct($path)
     {
-        $this->yaml = Yaml::parse(file_get_contents($path));
+        $this->path = $path;
+    }
+
+    public function getYaml()
+    {
+        if (is_file($this->path)) {
+            return null;
+        }
+
+        return Yaml::parse(file_get_contents($this->path));
     }
 
     public function getRoute()
@@ -25,15 +34,15 @@ class YmlReader extends AbstractReader
 
     public function isAvailable()
     {
-        if (!$this->yaml) {
+        if ($this->getYaml()) {
             return false;
         }
 
-        return isset($this->yaml[$this->getRoute()]);
+        return isset($this->getYaml()[$this->getRoute()]);
     }
 
     public function getConfig()
     {
-        return $this->yaml[$this->getRoute()];
+        return $this->getYaml()[$this->getRoute()];
     }
 }
