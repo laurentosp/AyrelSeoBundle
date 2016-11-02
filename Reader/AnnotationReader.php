@@ -9,18 +9,25 @@ class AnnotationReader extends AbstractReader
 {
     private function getAnnotation()
     {
+        $controller = $this->request->attributes->get('_controller');
+
+        if (!strstr($controller, '::')) {
+            return ;
+        }
+
         list($controller, $method) = explode(
             "::",
-            $this->request->attributes->get('_controller')
+            $controller
         );
         
         $reflectionMethod = new \ReflectionMethod($controller, $method);
         $reader = new Annotations\AnnotationReader();
 
-        return $reader->getMethodAnnotation(
+        $anot =  $reader->getMethodAnnotation(
             $reflectionMethod,
             SeoAnnotation::class
         );
+
     }
 
     public function isAvailable()

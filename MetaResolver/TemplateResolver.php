@@ -9,32 +9,12 @@ use Ayrel\SeoBundle\Configurator\SimpleConfigurator;
  */
 class TemplateResolver
 {
-    public function __construct(SimpleConfigurator $configurator)
-    {
+    public function __construct(
+        SimpleConfigurator $configurator,
+        \Twig_Environment $templating
+    ) {
         $this->configurator = $configurator;
-    }
-
-    /**
-    * Get templating
-    * @return \Twig_Environment $templating
-    */
-    public function getTemplating()
-    {
-        if ($this->templating===null) {
-            throw new \Exception('templating is not set');
-        }
-
-        return $this->templating;
-    }
-    
-    /**
-    * Set templating
-    * @return $this
-    */
-    public function setTemplating(\Twig_Environment $templating)
-    {
         $this->templating = $templating;
-        return $this;
     }
 
     /**
@@ -74,7 +54,7 @@ class TemplateResolver
 
     public function resolveTemplate($template)
     {
-        $tmp = $this->getTemplating()->createTemplate($template);
+        $tmp = $this->templating->createTemplate($template);
         return strip_tags($tmp->render($this->getContext()));
     }
 }

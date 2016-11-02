@@ -9,30 +9,47 @@ use Ayrel\SeoBundle\MetaResolver\TemplateResolver;
  */
 class Renderer
 {
-    const TPL = 'AyrelSeoBundle::seo.html.twig';
+    private $tplResolver;
+    private $selectedStrategy;
+    private $stategies = [];
 
     public function __construct(
-        \Twig_Environment $twig,
         TemplateResolver $tplResolver,
-        $tpl = null
+        $selectedStrategy = 'response'
     ) {
-        $this->twig = $twig;
         $this->tplResolver = $tplResolver;
-        $this->tplResolver->setTemplating($twig);
-        
-        if ($tpl===null) {
-            $tpl = self::TPL;
-        }
+        $this->selectedStrategy = $selectedStrategy;
+    }
 
-        $this->tpl = $tpl;
+    public function addStrategy($renderer, $name)
+    {
+        $this->strategies[$name] = $renderer;
+    }
+
+    public function getStrategy()
+    {
+        return $this->strategies[$this->getSelectedStrategy()];
+    }
+
+    public function setSelectedStrategy($name)
+    {
+        $this->selectedStrategy = $name;
+    }
+
+    public function getSelectedStrategy()
+    {
+        return $this->selectedStrategy;
     }
 
     public function render()
     {
-        return $this->twig->render(
-            $this->tpl,
-            $this->getMetaData()
-        );
+        try {
+            return $this->getStrategy()->render(
+                $this->getMetaData()
+            );
+        } catch (\Exception $e) {
+            var_dump($e->getMessage());
+        }
     }
 
     public function getMetaData()

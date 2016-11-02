@@ -22,5 +22,8 @@
         "exclude-from-classmap": [
             "/Tests/"
         ]
+    },
+    "require-dev": {
+        "symfony/phpunit-bridge": "^3.1"
     }
 }

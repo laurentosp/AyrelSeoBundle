@@ -2,13 +2,24 @@ services:
   ayrel_seo.renderer:
     class: Ayrel\SeoBundle\Renderer
     arguments:
-      - "@twig"
       - "@ayrel_seo.template_resolver"
+    public: false
+    calls:
+          - [addStrategy, ['@ayrel_seo.twig_renderer', 'twig']]
+          - [addStrategy, ['@ayrel_seo.response_renderer', 'response']]
+  ayrel_seo.twig_renderer:
+    class: Ayrel\SeoBundle\Renderer\TwigRenderer
+    arguments:
+      - "@twig"
+    public: false
+  ayrel_seo.response_renderer:
+    class: Ayrel\SeoBundle\Renderer\ResponseRenderer
     public: false
   ayrel_seo.template_resolver:
     class: Ayrel\SeoBundle\MetaResolver\TemplateResolver
     arguments:
       - "@ayrel_seo.configurator"
+      - "@twig"
     public: false
   ayrel_seo.yml_reader:
     class: Ayrel\SeoBundle\Reader\YmlReader
@@ -26,10 +37,3 @@ services:
     calls:
           - [addReader, ['@ayrel_seo.yml_reader']]
           - [addReader, ['@ayrel_seo.annotation_reader']]
-  ayrel_seo.twig_extension:
-    class: Ayrel\SeoBundle\Twig\SeoExtension
-    arguments:
-      - "@ayrel_seo.renderer"
-    public: false
-    tags:
-        - { name: twig.extension }

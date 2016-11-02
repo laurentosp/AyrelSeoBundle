@@ -12,7 +12,7 @@ class SimpleConfigurator
 
     public function __construct(RequestStack $requestStack)
     {
-        $this->request = $requestStack->getCurrentRequest();
+        $this->request = $requestStack->getMasterRequest();
     }
 
     public function addReader(AbstractReader $reader)
@@ -31,7 +31,10 @@ class SimpleConfigurator
             }
         }
 
-        throw new \Exception('no reader was found');
+        throw new \Exception(sprintf(
+            'no reader was found for route %s',
+            $this->request->attributes->get('_route')
+        ));
     }
 
     public function getConfig()

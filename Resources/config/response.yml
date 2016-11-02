@@ -1,0 +1,7 @@
+services:
+  ayrel_seo.seo_listener:
+    class: Ayrel\SeoBundle\EventListener\SeoListener
+    arguments:
+      - "@ayrel_seo.renderer"
+    tags:
+        - { name: kernel.event_listener, event: kernel.response }

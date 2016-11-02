@@ -1,0 +1,8 @@
+services:
+  ayrel_seo.twig_extension:
+    class: Ayrel\SeoBundle\Twig\SeoExtension
+    arguments:
+      - "@ayrel_seo.renderer"
+    public: false
+    tags:
+        - { name: twig.extension }
