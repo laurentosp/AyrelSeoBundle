@@ -2,11 +2,14 @@ services:
   ayrel_seo.renderer:
     class: Ayrel\SeoBundle\Renderer
     arguments:
+      - "@logger"
       - "@ayrel_seo.template_resolver"
     public: false
     calls:
           - [addStrategy, ['@ayrel_seo.twig_renderer', 'twig']]
           - [addStrategy, ['@ayrel_seo.response_renderer', 'response']]
+    tags:
+        - { name: monolog.logger, channel: seo }
   ayrel_seo.twig_renderer:
     class: Ayrel\SeoBundle\Renderer\TwigRenderer
     arguments:

@@ -26,17 +26,18 @@ class ConfigTemplate
 
     private function getTemplate($key, $val)
     {
-        if ($val != strip_tags($val)) {
-            throw new \Exception(sprintf(
-                'Error Tag %s : Meta Template couldn\'t have htmls tags',
-                $key
-            ));
-        }
-
         if ($val===null) {
             if (isset($this->defaults[$key])) {
                 $val = $this->defaults[$key];
             }
+        }
+
+        if ($val != strip_tags($val)) {
+            throw new \Exception(sprintf(
+                'Error Tag %s : %s Meta Template couldn\'t have htmls tags',
+                $key,
+                $val
+            ));
         }
 
         return $val;

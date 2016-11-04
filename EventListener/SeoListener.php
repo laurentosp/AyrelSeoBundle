@@ -42,7 +42,13 @@ class SeoListener
 
         $response = $event->getResponse();
         $strategy->setResponse($response);
-        $response->setContent($this->renderer->render());
+        
+        $content = $this->renderer->render();
+        if ($content===null) {
+            return ;
+        }
+
+        $response->setContent($content);
         $event->setResponse($response);
     }
 }

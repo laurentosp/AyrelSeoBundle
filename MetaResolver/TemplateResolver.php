@@ -3,12 +3,15 @@
 namespace Ayrel\SeoBundle\MetaResolver;
 
 use Ayrel\SeoBundle\Configurator\SimpleConfigurator;
+use Monolog\Logger;
 
 /**
  *
  */
 class TemplateResolver
 {
+    private $logger = null;
+
     public function __construct(
         SimpleConfigurator $configurator,
         \Twig_Environment $templating
@@ -35,13 +38,40 @@ class TemplateResolver
         return $this->configurator->getContext();
     }
 
+    /**
+    * Get logger
+    * @return Logger
+    */
+    public function getLogger()
+    {
+        return $this->logger;
+    }
+    
+    /**
+    * Set logger
+    * @return $this
+    */
+    public function setLogger(Logger $logger)
+    {
+        $this->logger = $logger;
+        return $this;
+    }
+
     public function getMetaData()
     {
         $meta = [];
 
         foreach ($this->getConfig() as $key => $val) {
             $key = str_replace("_", ":", $key);
-            $meta['meta'][$key] = $this->resolveTemplate($val);
+            $tag = $this->resolveTemplate($val);
+            $meta['meta'][$key] = $tag;
+
+            if ($this->getLogger()) {
+                $this->getLogger()->info(vsprintf(
+                    "%s : %s",
+                    array( $key, $tag)
+                ));
+            }
         }
 
         if ($meta['meta']['title']) {
@@ -55,6 +85,6 @@ class TemplateResolver
     public function resolveTemplate($template)
     {
         $tmp = $this->templating->createTemplate($template);
-        return strip_tags($tmp->render($this->getContext()));
+        return $tmp->render($this->getContext());
     }
 }

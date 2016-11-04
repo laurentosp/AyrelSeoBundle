@@ -3,6 +3,7 @@
 namespace Ayrel\SeoBundle;
 
 use Ayrel\SeoBundle\MetaResolver\TemplateResolver;
+use Monolog\Logger;
 
 /**
  *
@@ -13,10 +14,13 @@ class Renderer
     private $selectedStrategy;
 
     public function __construct(
+        Logger $logger,
         TemplateResolver $tplResolver,
         $selectedStrategy = 'response'
     ) {
+        $this->logger = $logger;
         $this->tplResolver = $tplResolver;
+        $this->tplResolver->setLogger($logger);
         $this->selectedStrategy = $selectedStrategy;
     }
 
@@ -47,6 +51,8 @@ class Renderer
                 $this->getMetaData()
             );
         } catch (\Exception $e) {
+            $this->logger->error($e->getMessage());
+            return null;
         }
     }
 
