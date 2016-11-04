@@ -30,7 +30,7 @@ class SeoListener
             return;
         }
 
-        if (strstr($request->attributes->get('_controller'), "::")==false) {
+        if (strstr($request->attributes->get('_controller'), "::")===false) {
             return ;
         }
 

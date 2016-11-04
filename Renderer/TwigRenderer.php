@@ -10,7 +10,7 @@ class TwigRenderer
     {
         $this->twig = $twig;
 
-        if ($tpl == null) {
+        if ($tpl===null) {
             $tpl = self::TPL;
         }
 

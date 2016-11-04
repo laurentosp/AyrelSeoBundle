@@ -11,7 +11,6 @@ class Renderer
 {
     private $tplResolver;
     private $selectedStrategy;
-    private $stategies = [];
 
     public function __construct(
         TemplateResolver $tplResolver,
@@ -48,7 +47,6 @@ class Renderer
                 $this->getMetaData()
             );
         } catch (\Exception $e) {
-            var_dump($e->getMessage());
         }
     }
 

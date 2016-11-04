@@ -35,7 +35,7 @@ class ResponseRenderer
     {
         $this->metadata = $metadata;
         
-        if (($response=$this->getResponse())==null) {
+        if (($response=$this->getResponse())===null) {
             return false;
         }
 
@@ -59,7 +59,7 @@ class ResponseRenderer
 
     public function getTitle()
     {
-        if ($title = $this->metadata['title']) {
+        if (isset($this->metadata['title'])) {
             return vsprintf(self::TITLE_PATTERN, $this->metadata['title']);
         }
     }
@@ -95,18 +95,20 @@ class ResponseRenderer
         
         $metadata = $this->metadata;
 
-        $heads = $crawler->filter('head')->children()->reduce(function ($crawler) use ($metadata) {
-            if (isset($metadata['title'])&&$crawler->nodeName()=="title") {
-                return false;
-            }
-
-            foreach ($metadata['meta'] as $name => $meta) {
-                if ($crawler->nodeName()=="meta"&&$crawler->attr('name')==$name) {
+        $heads = $crawler->filter('head')->children()->reduce(
+            function (Crawler $crawler) use ($metadata) {
+                if (isset($metadata['title'])&&$crawler->nodeName()==="title") {
                     return false;
                 }
+
+                foreach ($metadata['meta'] as $name => $meta) {
+                    if ($crawler->nodeName()==="meta"&&$crawler->attr('name')===$name) {
+                        return false;
+                    }
+                }
+                return true;
             }
-            return true;
-        });
+        );
 
         $head = "";
         foreach ($heads as $node) {
