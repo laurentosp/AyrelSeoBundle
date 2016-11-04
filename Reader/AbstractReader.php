@@ -33,9 +33,6 @@ abstract class AbstractReader
 
     public function getContext()
     {
-        $this->getRequest()->attributes->set('var', "ma variable");
-        $this->getRequest()->attributes->set('desc', "ma desc...");
-
         return $this->getRequest()->attributes->all();
     }
 
