@@ -40,5 +40,12 @@ class AyrelSeoExtension extends Extension
         $container
             ->getDefinition('ayrel_seo.renderer')
             ->addArgument($config['strategy']);
+
+        if (count($config['default'])>0) {
+            $container
+                ->getDefinition('ayrel_seo.config_template_factory')
+                ->addArgument($config['default'])
+            ;
+        }
     }
 }

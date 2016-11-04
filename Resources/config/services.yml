@@ -29,10 +29,13 @@ services:
   ayrel_seo.annotation_reader:
     class: Ayrel\SeoBundle\Reader\AnnotationReader
     public: false
+  ayrel_seo.config_template_factory:
+    class: Ayrel\SeoBundle\Config\ConfigTemplateFactory
   ayrel_seo.configurator:
     class: Ayrel\SeoBundle\Configurator\SimpleConfigurator
     arguments:
       - "@request_stack"
+      - "@ayrel_seo.config_template_factory"
     public: false
     calls:
           - [addReader, ['@ayrel_seo.yml_reader']]

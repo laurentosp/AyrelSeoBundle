@@ -2,6 +2,7 @@
 
 namespace Ayrel\SeoBundle\Configurator;
 
+use Ayrel\SeoBundle\Config\ConfigTemplateFactory;
 use Ayrel\SeoBundle\Reader\AbstractReader;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -9,10 +10,12 @@ class SimpleConfigurator
 {
     private $readers = [];
     private $request;
+    private $configTemplateFactory;
 
-    public function __construct(RequestStack $requestStack)
+    public function __construct(RequestStack $requestStack, ConfigTemplateFactory $configTemplateFactory)
     {
         $this->request = $requestStack->getMasterRequest();
+        $this->configTemplateFactory = $configTemplateFactory;
     }
 
     public function addReader(AbstractReader $reader)
@@ -41,11 +44,10 @@ class SimpleConfigurator
     {
         $config = $this->getReader()->getConfig();
 
-        foreach ($config as $key => $val) {
-            $config[$key] = strip_tags($val);
-        }
-
-        return $config;
+        return $this->configTemplateFactory
+            ->createConfigTemplate($config)
+            ->all()
+        ;
     }
 
     public function getContext()
