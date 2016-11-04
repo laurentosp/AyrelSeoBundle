@@ -23,7 +23,7 @@ class AnnotationReader extends AbstractReader
         $reflectionMethod = new \ReflectionMethod($controller, $method);
         $reader = new Annotations\AnnotationReader();
 
-        $anot =  $reader->getMethodAnnotation(
+        return  $reader->getMethodAnnotation(
             $reflectionMethod,
             SeoAnnotation::class
         );

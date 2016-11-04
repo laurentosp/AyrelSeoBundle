@@ -2,8 +2,6 @@
 
 namespace Ayrel\SeoBundle\Config;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
-
 class ConfigTemplate
 {
     private $defaults = [];
@@ -29,7 +27,7 @@ class ConfigTemplate
     private function getTemplate($key, $val)
     {
         if ($val != strip_tags($val)) {
-            throw new Exception(sprintf(
+            throw new \Exception(sprintf(
                 'Error Tag %s : Meta Template couldn\'t have htmls tags',
                 $key
             ));
