@@ -43,3 +43,10 @@ services:
     calls:
           - [addReader, ['@ayrel_seo.yml_reader']]
           - [addReader, ['@ayrel_seo.annotation_reader']]
+  ayrel_seo.data_collector:
+    class: Ayrel\SeoBundle\DataCollector\SeoCollector
+    arguments:
+      - "@ayrel_seo.template_resolver"
+    public: false
+    tags:
+        - { name: data_collector, template: 'seo.html.twig', id: 'seo' }
