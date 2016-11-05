@@ -54,4 +54,9 @@ class SimpleConfigurator
     {
         return $this->getReader()->getContext();
     }
+
+    public function getRequest()
+    {
+        return $this->request;
+    }
 }

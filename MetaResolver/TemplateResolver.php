@@ -79,6 +79,11 @@ class TemplateResolver
             unset($meta['meta']['title']);
         }
 
+        $this->configurator->getRequest()->attributes->set(
+            'ayrel_seo.meta',
+            $meta
+        );
+
         return $meta;
     }
 
