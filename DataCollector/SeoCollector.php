@@ -38,7 +38,7 @@ class SeoCollector extends DataCollector
     public function getSize()
     {
         $size = 0;
-        if ($this->getTitle()!=null) {
+        if ($this->getTitle()!==null) {
             $size++;
         }
 

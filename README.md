@@ -142,4 +142,4 @@ homepage:
 ```
 
 ##Resources
-[Twig Strategy](Resources/doc/twig_render_strategy.md)   
+[Twig Strategy](Resources/doc/twig_render_strategy.md)
