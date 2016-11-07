@@ -10,20 +10,7 @@ You can write meta tags with Twig patterns. The available variables are those in
 
 ###Step 1 : Download
 
-this bundle is not STABLE, it's not publish on packagist...
-
-if you want to install the package please add a custom repository to your composer.json file
-
-```sh
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/laurentosp/AyrelSeoBundle"
-        }
-    ]
-```
-
-after that you can do 
+use composer...
 
 ```sh
 composer require ayrel/seo-bundle dev-master
