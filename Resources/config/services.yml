@@ -49,4 +49,4 @@ services:
       - "@ayrel_seo.template_resolver"
     public: false
     tags:
-        - { name: data_collector, template: 'seo.html.twig', id: 'seo' }
+        - { name: data_collector, template: '@AyrelSeo/Collector/seo.html.twig', id: 'seo' }
