@@ -2,14 +2,25 @@ services:
   ayrel_seo.renderer:
     class: Ayrel\SeoBundle\Renderer
     arguments:
-      - "@logger"
       - "@ayrel_seo.template_resolver"
+      - "@event_dispatcher"
     public: false
     calls:
           - [addStrategy, ['@ayrel_seo.twig_renderer', 'twig']]
           - [addStrategy, ['@ayrel_seo.response_renderer', 'response']]
+  ayrel_seo.logger_subscriber:
+    class: Ayrel\SeoBundle\EventSubscriber\LoggerSubscriber
+    arguments:
+      - "@logger"
     tags:
         - { name: monolog.logger, channel: seo }
+        - { name: kernel.event_subscriber }
+  ayrel_seo.collector_subscriber:
+    class: Ayrel\SeoBundle\EventSubscriber\DataCollectorSubscriber
+    arguments:
+      - "@request_stack"
+    tags:
+        - { name: kernel.event_subscriber }
   ayrel_seo.twig_renderer:
     class: Ayrel\SeoBundle\Renderer\TwigRenderer
     arguments:
@@ -38,6 +49,7 @@ services:
     class: Ayrel\SeoBundle\Configurator\SimpleConfigurator
     arguments:
       - "@request_stack"
+      - "@event_dispatcher"
       - "@ayrel_seo.config_template_factory"
     public: false
     calls:

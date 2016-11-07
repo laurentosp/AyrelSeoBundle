@@ -31,11 +31,6 @@ abstract class AbstractReader
         return $this;
     }
 
-    public function getContext()
-    {
-        return $this->getRequest()->attributes->all();
-    }
-
     abstract public function getConfig();
 
     abstract public function isAvailable();

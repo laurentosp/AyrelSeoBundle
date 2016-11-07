@@ -5,6 +5,9 @@ namespace Ayrel\SeoBundle\Configurator;
 use Ayrel\SeoBundle\Config\ConfigTemplateFactory;
 use Ayrel\SeoBundle\Reader\AbstractReader;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Ayrel\SeoBundle\Event\SeoEvent;
+use Ayrel\SeoBundle\Event\PreConfigEvent;
 
 class SimpleConfigurator
 {
@@ -12,10 +15,14 @@ class SimpleConfigurator
     private $request;
     private $configTemplateFactory;
 
-    public function __construct(RequestStack $requestStack, ConfigTemplateFactory $configTemplateFactory)
-    {
+    public function __construct(
+        RequestStack $requestStack,
+        EventDispatcherInterface $dispatcher,
+        ConfigTemplateFactory $configTemplateFactory
+    ) {
         $this->request = $requestStack->getMasterRequest();
         $this->configTemplateFactory = $configTemplateFactory;
+        $this->dispatcher = $dispatcher;
     }
 
     public function addReader(AbstractReader $reader)
@@ -36,13 +43,20 @@ class SimpleConfigurator
 
         throw new \Exception(sprintf(
             'no reader was found for route %s',
-            $this->request->attributes->get('_route')
+            $this->getRoute()
         ));
     }
 
     public function getConfig()
     {
-        $config = $this->getReader()->getConfig();
+        $event = new PreConfigEvent($this->getRoute(), $this->getContext());
+        $this->dispatcher->dispatch(SeoEvent::PRE_CONFIG, $event);
+
+        $config = $event->getConfig();
+
+        if ($config===null) {
+            $config = $this->getReader()->getConfig();
+        }
 
         return $this->configTemplateFactory
             ->createConfigTemplate($config)
@@ -50,9 +64,14 @@ class SimpleConfigurator
         ;
     }
 
+    public function getRoute()
+    {
+        return $this->request->attributes->get('_route');
+    }
+
     public function getContext()
     {
-        return $this->getReader()->getContext();
+        return $this->getRequest()->attributes->all();
     }
 
     public function getRequest()

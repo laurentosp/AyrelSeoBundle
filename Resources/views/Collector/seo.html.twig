@@ -10,9 +10,25 @@
         <span class="sf-toolbar-label">tags</span>
     {% endset %}
 
+    {% set status_color %}{% spaceless %}
+        {% if collector.error is not empty %}
+            red
+        {% else %}
+            normal
+        {% endif %}
+    {% endspaceless %}
+    {% endset %}
+
     {% set text %}
         {# this is the content displayed when hovering the mouse over
            the toolbar panel #}
+    
+        {% if collector.error %}
+        <div class="sf-toolbar-info-piece">
+            <b>Error</b>
+            <span>{{collector.error}}</span>
+        </div>
+        {% else %}
         <div class="sf-toolbar-info-piece">
             <b>Title</b>
             <span>{{collector.title}}</span>
@@ -24,11 +40,12 @@
             <span>{{value[:30]}}</span>
         </div>
         {% endfor %}
+        {% endif %}
     {% endset %}
 
     {# the 'link' value set to 'false' means that this panel doesn't
        show a section in the web profiler #}
-    {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { link: true }) }}
+    {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { link: true, status: status_color  }) }}
 {% endblock %}
 
 
@@ -47,6 +64,9 @@
 {% block panel %}
     {# Optional, for showing the most details. #}
     <h2>Seo Meta Tags</h2>
+    {% if collector.error %}
+        {{collector.error}}
+    {% else %}
     <table>
         <thead>
             <tr>
@@ -70,4 +90,5 @@
             {% endfor %}
         </tbody>
     </table>
+    {% endif %}
 {% endblock %}

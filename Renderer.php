@@ -2,8 +2,12 @@
 
 namespace Ayrel\SeoBundle;
 
+use Ayrel\SeoBundle\Event\ExceptionEvent;
+use Ayrel\SeoBundle\Event\MetaDataEvent;
+use Ayrel\SeoBundle\Event\SeoEvent;
 use Ayrel\SeoBundle\MetaResolver\TemplateResolver;
 use Monolog\Logger;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  *
@@ -14,13 +18,12 @@ class Renderer
     private $selectedStrategy;
 
     public function __construct(
-        Logger $logger,
         TemplateResolver $tplResolver,
+        EventDispatcherInterface $dispacher,
         $selectedStrategy = 'response'
     ) {
-        $this->logger = $logger;
+        $this->dispacher = $dispacher;
         $this->tplResolver = $tplResolver;
-        $this->tplResolver->setLogger($logger);
         $this->selectedStrategy = $selectedStrategy;
     }
 
@@ -51,13 +54,20 @@ class Renderer
                 $this->getMetaData()
             );
         } catch (\Exception $e) {
-            $this->logger->error($e->getMessage());
+            $event = new ExceptionEvent($e);
+            $this->dispacher->dispatch(SeoEvent::EXCEPTION, $event);
+
             return null;
         }
     }
 
     public function getMetaData()
     {
-        return $this->tplResolver->getMetaData();
+        $metadata = $this->tplResolver->getMetaData();
+
+        $event = new MetaDataEvent($metadata);
+        $this->dispacher->dispatch(SeoEvent::POST_METADATA, $event);
+
+        return $event->getMetaData();
     }
 }
