@@ -10,7 +10,9 @@ class ResponseRenderer
     const TITLE_PATTERN = '<title>%s</title>';
     const META_PATTERN = "<meta name=\"%s\" content=\"%s\" />";
 
-    private $metadata;
+    private $metadata = [];
+
+    private $response;
 
     /**
     * Get response
@@ -76,7 +78,7 @@ class ResponseRenderer
 
     public function getNewHeadChildrenTags()
     {
-        if (empty($this->metadata)) {
+        if (count($this->metadata)==0) {
             throw new \Exception('no metadata set!!');
         }
 

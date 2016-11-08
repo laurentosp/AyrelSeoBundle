@@ -8,10 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SeoCollector extends DataCollector
 {
-    public function __construct($temp)
-    {
-    }
-
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
         $this->data = array(

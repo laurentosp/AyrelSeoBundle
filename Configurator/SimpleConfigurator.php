@@ -49,8 +49,10 @@ class SimpleConfigurator
 
     public function getConfig()
     {
-        $event = new PreConfigEvent($this->getRoute(), $this->getContext());
-        $this->dispatcher->dispatch(SeoEvent::PRE_CONFIG, $event);
+        $event = $this->dispatcher->dispatch(
+            SeoEvent::PRE_CONFIG,
+            new PreConfigEvent($this->getRoute(), $this->getContext())
+        );
 
         $config = $event->getConfig();
 

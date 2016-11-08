@@ -38,4 +38,9 @@ class DataCollectorSubscriber implements EventSubscriberInterface
             $event->getException()->getMessage()
         );
     }
+
+    public function getRequest()
+    {
+        return $this->request;
+    }
 }

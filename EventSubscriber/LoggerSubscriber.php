@@ -5,13 +5,14 @@ namespace Ayrel\SeoBundle\EventSubscriber;
 use Ayrel\SeoBundle\Event\ExceptionEvent;
 use Ayrel\SeoBundle\Event\MetaDataEvent;
 use Ayrel\SeoBundle\Event\SeoEvent;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class LoggerSubscriber implements EventSubscriberInterface
 {
     private $logger;
 
-    public function __construct($logger)
+    public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
     }

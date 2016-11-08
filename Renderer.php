@@ -54,8 +54,10 @@ class Renderer
                 $this->getMetaData()
             );
         } catch (\Exception $e) {
-            $event = new ExceptionEvent($e);
-            $this->dispacher->dispatch(SeoEvent::EXCEPTION, $event);
+            $this->dispacher->dispatch(
+                SeoEvent::EXCEPTION,
+                new ExceptionEvent($e)
+            );
 
             return null;
         }
@@ -65,8 +67,10 @@ class Renderer
     {
         $metadata = $this->tplResolver->getMetaData();
 
-        $event = new MetaDataEvent($metadata);
-        $this->dispacher->dispatch(SeoEvent::POST_METADATA, $event);
+        $event = $this->dispacher->dispatch(
+            SeoEvent::POST_METADATA,
+            new MetaDataEvent($metadata)
+        );
 
         return $event->getMetaData();
     }
