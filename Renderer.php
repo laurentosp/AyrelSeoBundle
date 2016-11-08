@@ -6,7 +6,6 @@ use Ayrel\SeoBundle\Event\ExceptionEvent;
 use Ayrel\SeoBundle\Event\MetaDataEvent;
 use Ayrel\SeoBundle\Event\SeoEvent;
 use Ayrel\SeoBundle\MetaResolver\TemplateResolver;
-use Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
