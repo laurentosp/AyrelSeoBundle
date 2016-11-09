@@ -6,6 +6,10 @@
             <directory suffix="Test.php">./Tests/</directory>
         </testsuite>
     </testsuites>
+    <logging>
+        <log type="coverage-clover" target="build/logs/clover.xml"/>
+        <log type="coverage-text"/>
+    </logging>
     <filter>
         <whitelist>
             <directory>./</directory>
