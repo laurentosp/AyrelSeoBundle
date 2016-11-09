@@ -18,4 +18,4 @@ before_install:
 
 install: composer update --prefer-source $COMPOSER_FLAGS
 
-script: phpunit --coverage-text
+script: php vendor/bin/phpunit --coverage-text

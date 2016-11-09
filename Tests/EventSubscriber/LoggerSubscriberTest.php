@@ -5,7 +5,7 @@ namespace Ayrel\SeoBundle\Tests\EventSubscriber;
 use Ayrel\SeoBundle\EventSubscriber\LoggerSubscriber;
 use Ayrel\SeoBundle\Event\ExceptionEvent;
 use Ayrel\SeoBundle\Event\MetaDataEvent;
-use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use PHPUnit\Framework\TestCase;
 
 class LoggerSubscriberTest extends TestCase
@@ -29,7 +29,7 @@ class LoggerSubscriberTest extends TestCase
 
     public function getMockLogger()
     {
-        $logger = $this->getMockBuilder(Logger::class)
+        $logger = $this->getMockBuilder(LoggerInterface::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;
