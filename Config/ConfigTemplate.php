@@ -18,14 +18,16 @@ class ConfigTemplate
     {
         $ret = [];
         foreach ($this->templates as $key => $val) {
-            $ret[$key] = $this->getTemplate($key, $val);
+            $ret[$key] = $this->getTemplate($key);
         }
 
         return $ret;
     }
 
-    private function getTemplate($key, $val)
+    public function getTemplate($key)
     {
+        $val = $this->templates[$key];
+
         if ($val===null) {
             if (isset($this->defaults[$key])) {
                 $val = $this->defaults[$key];
