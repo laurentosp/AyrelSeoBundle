@@ -4,9 +4,7 @@ With this bundle you can configure html meta tag and title tag in a config file 
 
 You can write meta tags with Twig patterns. The available variables are those in the Request attributes.
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/00b944d1-d197-42ae-8319-27bccebe6006/mini.png)](https://insight.sensiolabs.com/projects/00b944d1-d197-42ae-8319-27bccebe6006)
-
-[![Build Status](https://travis-ci.org/laurentosp/AyrelSeoBundle.svg?branch=master)](https://travis-ci.org/laurentosp/AyrelSeoBundle)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/00b944d1-d197-42ae-8319-27bccebe6006/mini.png)](https://insight.sensiolabs.com/projects/00b944d1-d197-42ae-8319-27bccebe6006) [![Build Status](https://travis-ci.org/laurentosp/AyrelSeoBundle.svg?branch=master)](https://travis-ci.org/laurentosp/AyrelSeoBundle) [![Coverage Status](https://coveralls.io/repos/github/laurentosp/AyrelSeoBundle/badge.svg)](https://coveralls.io/github/laurentosp/AyrelSeoBundle)
 
 ## Install
 
