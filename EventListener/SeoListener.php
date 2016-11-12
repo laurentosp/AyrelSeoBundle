@@ -18,10 +18,6 @@ class SeoListener
     {
         $request = $event->getRequest();
 
-        if ($request===null) {
-            return;
-        }
-
         if ($request->attributes->get('_route')===null) {
             return;
         }
