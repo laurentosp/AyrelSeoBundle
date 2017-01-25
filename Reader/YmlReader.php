@@ -37,11 +37,13 @@ class YmlReader extends AbstractReader
             return false;
         }
 
-        return isset($this->getYaml()[$this->getRoute()]);
+        return array_key_exists($this->getRoute(), $this->getYaml());
     }
 
     public function getConfig()
     {
-        return $this->getYaml()[$this->getRoute()];
+        $readerConfig = $this->getYaml()[$this->getRoute()];
+
+        return ($readerConfig===null) ? [] : $readerConfig;
     }
 }

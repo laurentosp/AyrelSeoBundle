@@ -13,10 +13,14 @@ class ConfigTemplate
         $this->defaults = $defaults;
         $this->templates = $templates;
     }
-
+    
     public function all()
     {
         $ret = [];
+        foreach ($this->defaults as $key => $val) {
+            $ret[$key] = $this->getTemplate($key);
+        }
+
         foreach ($this->templates as $key => $val) {
             $ret[$key] = $this->getTemplate($key);
         }
@@ -26,7 +30,10 @@ class ConfigTemplate
 
     public function getTemplate($key)
     {
-        $val = $this->templates[$key];
+        $val = null;
+        if (isset($this->templates[$key])) {
+            $val = $this->templates[$key];
+        }
 
         if ($val===null) {
             if (isset($this->defaults[$key])) {
