@@ -9,6 +9,7 @@ class ResponseRenderer
 {
     const TITLE_PATTERN = '<title>%s</title>';
     const META_PATTERN = "<meta name=\"%s\" content=\"%s\" />";
+    const META_PROPERTY_PATTERN = "<meta property=\"%s\" content=\"%s\" />";
 
     private $metadata = [];
 
@@ -62,16 +63,21 @@ class ResponseRenderer
     public function getTitle()
     {
         if (isset($this->metadata['title'])) {
-            return vsprintf(self::TITLE_PATTERN, $this->metadata['title']);
+            return vsprintf(self::TITLE_PATTERN, trim($this->metadata['title']));
         }
     }
 
     public function getMetaTag($name)
     {
+        $pattern = self::META_PATTERN;
+        if (substr($name, 0, 3)==="og:") {
+            $pattern = self::META_PROPERTY_PATTERN;
+        }
+
         if (isset($this->metadata['meta'][$name])) {
             return vsprintf(
-                self::META_PATTERN,
-                array( $name, $this->metadata['meta'][$name])
+                $pattern,
+                array( $name, trim($this->metadata['meta'][$name]))
             );
         }
     }
@@ -104,8 +110,10 @@ class ResponseRenderer
                 }
 
                 foreach ($metadata['meta'] as $name => $meta) {
-                    if ($crawler->nodeName()==="meta"&&$crawler->attr('name')===$name) {
-                        return false;
+                    if ($crawler->nodeName()==="meta") {
+                        if (($crawler->attr('name')===$name||$crawler->attr('property')===$name)) {
+                            return false;
+                        }
                     }
                 }
                 return true;
