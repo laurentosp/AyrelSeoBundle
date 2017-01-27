@@ -42,6 +42,7 @@ class TemplateResolver
         foreach ($this->getConfig() as $key => $val) {
             $key = str_replace("_", ":", $key);
             $tag = $this->resolveTemplate($val);
+            if (empty($tag)) continue;
             $meta['meta'][$key] = $tag;
         }
 
